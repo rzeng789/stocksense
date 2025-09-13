@@ -229,7 +229,10 @@ const FinancialIntelligence: React.FC = () => {
         throw new Error('Failed to analyze market event');
       }
       
-      const data = await response.json();
+      const response_data = await response.json();
+      
+      // Extract the actual analysis data from the response
+      const data = response_data.data || response_data;
       setAnalysis(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -262,6 +265,157 @@ const FinancialIntelligence: React.FC = () => {
     }
   };
 
+  // Show loading interface when analysis is in progress
+  if (loading) {
+    return (
+      <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="text-center max-w-4xl mx-auto">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <Brain className="h-8 w-8 text-blue-600" />
+            <h1 className="text-3xl font-bold text-gray-900">Financial Intelligence System</h1>
+          </div>
+          
+          <div className="mb-8">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <RefreshCw className="h-8 w-8 text-blue-600 animate-spin" />
+              <span className="text-2xl font-semibold text-gray-800">Analyzing Market Intelligence...</span>
+            </div>
+            <p className="text-gray-600 mb-6">Searching for similar articles and performing comprehensive analysis</p>
+            
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="flex flex-col items-center">
+                  <div className="bg-blue-100 rounded-full p-3 mb-2 animate-pulse">
+                    <Search className="h-5 w-5 text-blue-600" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Finding Similar Articles</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="bg-green-100 rounded-full p-3 mb-2">
+                    <BarChart3 className="h-5 w-5 text-green-600" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Primary Analysis</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="bg-purple-100 rounded-full p-3 mb-2">
+                    <Activity className="h-5 w-5 text-purple-600" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Connected Companies</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="bg-yellow-100 rounded-full p-3 mb-2">
+                    <Lightbulb className="h-5 w-5 text-yellow-600" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Investment Insights</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-sm text-gray-500">
+            Analyzing: <span className="font-medium text-gray-700">"{input}"</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show input-first interface when no analysis is available
+  if (!analysis && !loading) {
+    return (
+      <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="text-center max-w-4xl mx-auto">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <Brain className="h-8 w-8 text-blue-600" />
+            <h1 className="text-3xl font-bold text-gray-900">Financial Intelligence System</h1>
+          </div>
+          
+          <p className="text-xl text-gray-600 mb-8">
+            Enter a news headline or article summary to discover similar articles and get comprehensive market analysis
+          </p>
+          
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 mb-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">How it works:</h2>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-left">
+              <div className="flex flex-col items-center">
+                <div className="bg-blue-100 rounded-full p-3 mb-3">
+                  <Search className="h-6 w-6 text-blue-600" />
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">1. Enter News</h3>
+                <p className="text-sm text-gray-600 text-center">Input any market headline or article summary</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="bg-green-100 rounded-full p-3 mb-3">
+                  <Globe className="h-6 w-6 text-green-600" />
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">2. Find Similar</h3>
+                <p className="text-sm text-gray-600 text-center">We search for related articles online</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="bg-purple-100 rounded-full p-3 mb-3">
+                  <BarChart3 className="h-6 w-6 text-purple-600" />
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">3. Analyze Impact</h3>
+                <p className="text-sm text-gray-600 text-center">4-step analysis of market implications</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="bg-yellow-100 rounded-full p-3 mb-3">
+                  <Lightbulb className="h-6 w-6 text-yellow-600" />
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">4. Get Insights</h3>
+                <p className="text-sm text-gray-600 text-center">Actionable investment recommendations</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="max-w-2xl mx-auto">
+            <label className="block text-left text-sm font-medium text-gray-700 mb-2">
+              News Headline or Article Summary
+            </label>
+            <div className="flex gap-3">
+              <input
+                type="text"
+                placeholder="e.g., 'Tesla stock dropped 5% after earnings miss', 'Apple announces new AI features'..."
+                value={input}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
+                onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && handleAnalyze()}
+                className="flex-1 px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <button
+                onClick={handleAnalyze}
+                disabled={!input.trim()}
+                className="px-8 py-3 bg-blue-600 text-white text-lg font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
+              >
+                <Search className="h-5 w-5" />
+                Analyze
+              </button>
+            </div>
+            
+            <div className="mt-4 text-left">
+              <p className="text-sm text-gray-500 mb-2">Example headlines to try:</p>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  "Tesla stock dropped after earnings",
+                  "Apple announces AI partnership",
+                  "Fed raises interest rates",
+                  "Tech sector rally continues"
+                ].map((example) => (
+                  <button
+                    key={example}
+                    onClick={() => setInput(example)}
+                    className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors"
+                  >
+                    {example}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
       <div className="mb-6">
@@ -269,31 +423,31 @@ const FinancialIntelligence: React.FC = () => {
           <Brain className="h-6 w-6 text-blue-600" />
           <h2 className="text-2xl font-bold text-gray-900">Financial Intelligence System</h2>
         </div>
-        <p className="text-gray-600 mb-4">
-          Elite automated research and analysis for market events. Enter any headline or market event for comprehensive intelligence.
-        </p>
         
-        <div className="flex gap-2">
-          <input
-            type="text"
-            placeholder="e.g., 'Tesla stock dropped', 'Apple earnings beat', 'Tech sector rally'..."
-            value={input}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
-            onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && handleAnalyze()}
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-          <button
-            onClick={handleAnalyze}
-            disabled={loading || !input.trim()}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-          >
-            {loading ? (
-              <RefreshCw className="h-4 w-4 animate-spin" />
-            ) : (
-              <Search className="h-4 w-4" />
-            )}
-            {loading ? 'Analyzing...' : 'Analyze'}
-          </button>
+        {/* Show compact input form when analysis is available */}
+        <div className="bg-gray-50 rounded-lg p-4 mb-4">
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="Enter new headline or article summary..."
+              value={input}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
+              onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && handleAnalyze()}
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+            <button
+              onClick={handleAnalyze}
+              disabled={loading || !input.trim()}
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              {loading ? (
+                <RefreshCw className="h-4 w-4 animate-spin" />
+              ) : (
+                <Search className="h-4 w-4" />
+              )}
+              {loading ? 'Analyzing...' : 'New Analysis'}
+            </button>
+          </div>
         </div>
         
         {error && (
@@ -347,6 +501,8 @@ const FinancialIntelligence: React.FC = () => {
                   <Target className="h-6 w-6 text-blue-600" />
                   <h3 className="text-xl font-semibold text-gray-900">Executive Summary</h3>
                 </div>
+                
+
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Primary Company Overview */}

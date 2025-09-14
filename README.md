@@ -2,6 +2,12 @@
 
 A comprehensive web application that combines real-time stock sentiment analysis with advanced AI-powered correlation insights and risk assessment using Alpha Vantage's APIs and proprietary analysis algorithms.
 
+Core Problem We're Solving
+- Traditional financial news analysis tools only provide basic sentiment analysis ("positive" or "negative"). This leaves massive gaps in market intelligence:
+- Investors miss connected opportunities in supply chain companies
+- Markets often overreact or underreact to news vs. fundamental reality
+- Most people only trade the obvious primary company mentioned in news
+
 ## Features
 
 ### 🧠 Financial Intelligence Engine

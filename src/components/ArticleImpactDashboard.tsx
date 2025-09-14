@@ -36,8 +36,7 @@ import {
   X,
   Brain
 } from 'lucide-react';
-import AIStockAnalysis from './AIStockAnalysis';
-import FinancialIntelligence from './FinancialIntelligence';
+import StockSenseAI from './StockSenseAI';
 
 // Register Chart.js components
 ChartJS.register(
@@ -129,6 +128,9 @@ const ArticleImpactDashboard: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showStockModal, setShowStockModal] = useState(false);
   const [stockAnalysisData, setStockAnalysisData] = useState<any>(null);
+  
+  // AI Stock Analysis Engine state
+
 
   const analyzeArticle = async (headlineText: string) => {
     setIsAnalyzing(true);
@@ -248,283 +250,272 @@ const ArticleImpactDashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      {/* Header */}
-      <div className="max-w-6xl mx-auto mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">StockSense AI</h1>
-        <p className="text-gray-600 mb-6">
-          Analyze news headlines for stock market impact and sentiment
-        </p>
-      </div>
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Article Impact Dashboard</h1>
+          <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+            Analyze how news articles impact stock prices and market sentiment with AI-powered insights
+          </p>
+        </div>
 
-      {/* Input Form */}
-      <div className="max-w-6xl mx-auto mb-8">
-        <div className="bg-white rounded-lg shadow-lg p-6">
+        {/* Article Input */}
+        <div className="bg-white rounded-lg p-6 mb-8 border border-gray-200 shadow-sm">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Article Analysis</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="headline" className="block text-sm font-medium text-gray-700 mb-2">
-                News Headline or Article Summary
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Article Headline or News Summary
               </label>
               <textarea
-                id="headline"
                 value={headline}
                 onChange={(e) => setHeadline(e.target.value)}
-                placeholder="Enter a news headline or article summary to analyze its potential impact on stock markets..."
-                className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                rows={3}
-                required
+                placeholder="Enter article headline or news summary to analyze market impact..."
+                className="w-full h-32 px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
               />
             </div>
             <button
               type="submit"
               disabled={isAnalyzing || !headline.trim()}
-              className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isAnalyzing ? (
                 <>
-                  <RefreshCw className="w-5 h-5 animate-spin" />
-                  Analyzing...
+                  <RefreshCw className="h-5 w-5 animate-spin" />
+                  Analyzing Market Impact...
                 </>
               ) : (
                 <>
-                  <Zap className="w-5 h-5" />
+                  <BarChart3 className="h-5 w-5" />
                   Analyze Impact
                 </>
               )}
             </button>
           </form>
         </div>
-      </div>
 
-      {/* Analysis Results */}
-      {analysis && (
-        <div className="max-w-6xl mx-auto space-y-8">
-          {/* Overall Market Sentiment */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="flex items-center gap-3 mb-4">
-              {getSentimentIcon(analysis.overallMarketSentiment.score)}
-              <h2 className="text-xl font-bold text-gray-900">Overall Market Sentiment</h2>
-            </div>
-            <div className="grid md:grid-cols-3 gap-4">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-1">
-                  {(analysis.overallMarketSentiment.score * 100).toFixed(0)}%
-                </div>
-                <div className="text-sm text-gray-600">Sentiment Score</div>
-              </div>
-              <div className="text-center">
-                <div className="text-lg font-semibold text-gray-900 mb-1">
-                  {analysis.overallMarketSentiment.label}
-                </div>
-                <div className="text-sm text-gray-600">Market Outlook</div>
-              </div>
-              <div className="text-center">
-                <div className="text-lg font-semibold text-green-600 mb-1">
-                  {(analysis.overallMarketSentiment.confidence * 100).toFixed(0)}%
-                </div>
-                <div className="text-sm text-gray-600">Confidence</div>
-              </div>
-            </div>
-          </div>
+        {/* StockSense AI Section */}
+        <div className="mb-12">
+          <StockSenseAI />
+        </div>
 
-          {/* Stock Impacts */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <Target className="w-6 h-6 text-blue-600" />
-              Stock Impact Analysis
-            </h2>
-            <div className="grid gap-4">
-              {analysis.stockImpacts.map((stock, index) => (
-                <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <div className="font-bold text-lg text-gray-900">{stock.ticker}</div>
-                      <div className="text-gray-600">{stock.companyName}</div>
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getImpactColor(stock.impactLevel)}`}>
-                        {stock.impactLevel}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-500">Confidence: {(stock.confidence * 100).toFixed(0)}%</span>
-                      {stock.priceTarget && (
-                        <button
-                          onClick={() => handleStockAnalysis(stock.ticker, stock.priceTarget!.current, stock.priceTarget!.changePercent)}
-                          className="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 text-sm flex items-center gap-1"
-                        >
-                          <BarChart3 className="w-4 h-4" />
-                          View Chart
-                        </button>
-                      )}
-                    </div>
+        {/* Analysis Results */}
+        {analysis && (
+          <div className="space-y-8">
+            {/* Overall Market Sentiment */}
+            <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+              <div className="flex items-center gap-3 mb-4">
+                {getSentimentIcon(analysis.overallMarketSentiment.score)}
+                <h2 className="text-xl font-bold text-gray-900">Overall Market Sentiment</h2>
+              </div>
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-purple-600 mb-1">
+                    {(analysis.overallMarketSentiment.score * 100).toFixed(0)}%
                   </div>
-                  
-                  {stock.priceTarget && (
-                    <div className="grid md:grid-cols-4 gap-4 mb-3 p-3 bg-gray-50 rounded-lg">
-                      <div>
-                        <div className="text-sm text-gray-600">Current Price</div>
-                        <div className="font-semibold">${stock.priceTarget.current.toFixed(2)}</div>
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-600">Predicted Price</div>
-                        <div className="font-semibold">${stock.priceTarget.predicted.toFixed(2)}</div>
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-600">Change</div>
-                        <div className={`font-semibold ${
-                          stock.priceTarget.change >= 0 ? 'text-green-600' : 'text-red-600'
-                        }`}>
-                          {stock.priceTarget.change >= 0 ? '+' : ''}${stock.priceTarget.change.toFixed(2)}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-600">% Change</div>
-                        <div className={`font-semibold ${
-                          stock.priceTarget.changePercent >= 0 ? 'text-green-600' : 'text-red-600'
-                        }`}>
-                          {stock.priceTarget.changePercent >= 0 ? '+' : ''}{stock.priceTarget.changePercent.toFixed(2)}%
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium text-gray-700">Key Reasoning:</div>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      {stock.reasoning.map((reason, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          {reason}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <div className="text-sm text-gray-600">Sentiment Score</div>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Key Insights */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <Lightbulb className="w-6 h-6 text-yellow-500" />
-              Key Insights
-            </h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div>
-                <h3 className="font-semibold text-green-700 mb-2 flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5" />
-                  Opportunities
-                </h3>
-                <ul className="space-y-2">
-                  {analysis.opportunities.map((opportunity, index) => (
-                    <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                      {opportunity}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="font-semibold text-red-700 mb-2 flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5" />
-                  Risk Factors
-                </h3>
-                <ul className="space-y-2">
-                  {analysis.riskFactors.map((risk, index) => (
-                    <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                      {risk}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="font-semibold text-blue-700 mb-2 flex items-center gap-2">
-                  <Zap className="w-5 h-5" />
-                  General Insights
-                </h3>
-                <ul className="space-y-2">
-                  {analysis.keyInsights.map((insight, index) => (
-                    <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                      {insight}
-                    </li>
-                  ))}
-                </ul>
+                <div className="text-center">
+                  <div className="text-lg font-semibold text-gray-900 mb-1">
+                    {analysis.overallMarketSentiment.label}
+                  </div>
+                  <div className="text-sm text-gray-600">Market Outlook</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-semibold text-green-600 mb-1">
+                    {(analysis.overallMarketSentiment.confidence * 100).toFixed(0)}%
+                  </div>
+                  <div className="text-sm text-gray-600">Confidence</div>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Related Articles */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <FileText className="w-6 h-6 text-gray-600" />
-              Related Articles
-            </h2>
-            <div className="space-y-4">
-              {analysis.relatedArticles.map((article, index) => (
-                <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 mb-2">{article.headline}</h3>
-                      <p className="text-sm text-gray-600 mb-2">{article.summary}</p>
-                      <div className="flex items-center gap-4 text-xs text-gray-500">
-                        <span>{article.source}</span>
-                        <span>{new Date(article.publishedDate).toLocaleDateString()}</span>
-                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                          Relevance: {(article.relevanceScore * 100).toFixed(0)}%
+            {/* Stock Impacts */}
+            <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Target className="w-6 h-6 text-purple-600" />
+                Stock Impact Analysis
+              </h2>
+              <div className="grid gap-4">
+                {analysis.stockImpacts.map((stock, index) => (
+                  <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow bg-gray-50">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="font-bold text-lg text-gray-900">{stock.ticker}</div>
+                        <div className="text-gray-600">{stock.companyName}</div>
+                        <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getImpactColor(stock.impactLevel)}`}>
+                          {stock.impactLevel}
                         </span>
                       </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-gray-500">Confidence: {(stock.confidence * 100).toFixed(0)}%</span>
+                        {stock.priceTarget && (
+                          <button
+                            onClick={() => handleStockAnalysis(stock.ticker, stock.priceTarget!.current, stock.priceTarget!.changePercent)}
+                            className="px-3 py-1 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-sm flex items-center gap-1"
+                          >
+                            <BarChart3 className="w-4 h-4" />
+                            View Chart
+                          </button>
+                        )}
+                      </div>
                     </div>
-                    <a
-                      href={article.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ml-4 p-2 text-gray-400 hover:text-blue-600"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
+                    
+                    {stock.priceTarget && (
+                      <div className="grid md:grid-cols-4 gap-4 mb-3 p-3 bg-white rounded-lg border border-gray-100">
+                        <div>
+                          <div className="text-sm text-gray-500">Current Price</div>
+                          <div className="font-semibold text-gray-900">${stock.priceTarget.current.toFixed(2)}</div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-500">Predicted Price</div>
+                          <div className="font-semibold text-gray-900">${stock.priceTarget.predicted.toFixed(2)}</div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-500">Change</div>
+                          <div className={`font-semibold ${
+                            stock.priceTarget.change >= 0 ? 'text-green-600' : 'text-red-600'
+                          }`}>
+                            {stock.priceTarget.change >= 0 ? '+' : ''}${stock.priceTarget.change.toFixed(2)}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-500">% Change</div>
+                          <div className={`font-semibold ${
+                            stock.priceTarget.changePercent >= 0 ? 'text-green-600' : 'text-red-600'
+                          }`}>
+                            {stock.priceTarget.changePercent >= 0 ? '+' : ''}{stock.priceTarget.changePercent.toFixed(2)}%
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    <div className="space-y-2">
+                      <div className="text-sm font-medium text-gray-900">Key Reasoning:</div>
+                      <ul className="text-sm text-gray-600 space-y-1">
+                        {stock.reasoning.map((reason, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <div className="w-1.5 h-1.5 bg-purple-600 rounded-full mt-2 flex-shrink-0"></div>
+                            {reason}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Disclaimer */}
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <div className="flex items-start gap-2">
-              <AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="font-medium text-yellow-800 mb-1">Important Disclaimer</h4>
-                <p className="text-yellow-700 text-sm">
-                  This analysis is for educational purposes only and should not be considered as financial advice. 
-                  Stock predictions are based on AI analysis and may not reflect actual market performance. 
-                  Always conduct your own research and consult with financial professionals before making investment decisions.
-                </p>
+            {/* Key Insights */}
+            <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Lightbulb className="w-6 h-6 text-yellow-500" />
+                Key Insights
+              </h2>
+              <div className="grid md:grid-cols-3 gap-6">
+                <div>
+                  <h3 className="font-semibold text-green-600 mb-2 flex items-center gap-2">
+                    <TrendingUp className="w-5 h-5" />
+                    Opportunities
+                  </h3>
+                  <ul className="space-y-2">
+                    {analysis.opportunities.map((opportunity, index) => (
+                      <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                        {opportunity}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div>
+                  <h3 className="font-semibold text-red-600 mb-2 flex items-center gap-2">
+                    <AlertTriangle className="w-5 h-5" />
+                    Risk Factors
+                  </h3>
+                  <ul className="space-y-2">
+                    {analysis.riskFactors.map((risk, index) => (
+                      <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
+                        {risk}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div>
+                  <h3 className="font-semibold text-purple-600 mb-2 flex items-center gap-2">
+                    <Zap className="w-5 h-5" />
+                    General Insights
+                  </h3>
+                  <ul className="space-y-2">
+                    {analysis.keyInsights.map((insight, index) => (
+                      <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                        {insight}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Related Articles */}
+            <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <FileText className="w-6 h-6 text-gray-600" />
+                Related Articles
+              </h2>
+              <div className="space-y-4">
+                {analysis.relatedArticles.map((article, index) => (
+                  <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-gray-900 mb-2">{article.headline}</h3>
+                        <p className="text-sm text-gray-600 mb-2">{article.summary}</p>
+                        <div className="flex items-center gap-4 text-xs text-gray-500">
+                          <span>{article.source}</span>
+                          <span>{new Date(article.publishedDate).toLocaleDateString()}</span>
+                          <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                            Relevance: {(article.relevanceScore * 100).toFixed(0)}%
+                          </span>
+                        </div>
+                      </div>
+                      <a
+                        href={article.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-4 p-2 text-gray-400 hover:text-blue-600"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Disclaimer */}
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="font-medium text-yellow-800 mb-1">Important Disclaimer</h4>
+                  <p className="text-yellow-700 text-sm">
+                    This analysis is for educational purposes only and should not be considered as financial advice. 
+                    Stock predictions are based on AI analysis and may not reflect actual market performance. 
+                    Always conduct your own research and consult with financial professionals before making investment decisions.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* AI Stock Analysis Section */}
-      <div className="max-w-6xl mx-auto mt-12">
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <Brain className="w-8 h-8 text-blue-600" />
-            <h2 className="text-2xl font-bold text-gray-900">
-              AI Stock Analysis & Correlation Engine
-            </h2>
-          </div>
-          <AIStockAnalysis />
-        </div>
+        )}
       </div>
 
-      {/* Financial Intelligence Section */}
-      <div className="max-w-6xl mx-auto mt-12">
-        <FinancialIntelligence />
-      </div>
+
+
+
 
       {/* Stock Analysis Modal */}
       {showStockModal && (

@@ -33,13 +33,13 @@ const Navigation: React.FC<NavigationProps> = ({ activeView, onViewChange }) => 
   ];
 
   return (
-    <nav className="bg-white shadow-lg border-b border-gray-200">
+    <nav className="bg-gray-800 shadow-lg border-b border-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <BarChart3 className="w-8 h-8 text-blue-600" />
-            <span className="ml-2 text-xl font-bold text-gray-900">
+            <BarChart3 className="w-8 h-8 text-purple-400" />
+            <span className="ml-2 text-xl font-bold text-white">
               StockSense
             </span>
           </div>
@@ -56,8 +56,8 @@ const Navigation: React.FC<NavigationProps> = ({ activeView, onViewChange }) => 
                   onClick={() => onViewChange(item.id)}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-blue-100 text-blue-700 border-b-2 border-blue-600'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                      ? 'bg-purple-600 text-white border-b-2 border-purple-400'
+                      : 'text-gray-300 hover:text-white hover:bg-gray-700'
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -74,7 +74,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeView, onViewChange }) => 
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900"
+              className="text-gray-300 hover:text-white focus:outline-none focus:text-white"
             >
               {isMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -88,7 +88,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeView, onViewChange }) => 
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-700">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeView === item.id;
@@ -102,8 +102,8 @@ const Navigation: React.FC<NavigationProps> = ({ activeView, onViewChange }) => 
                     }}
                     className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium transition-colors ${
                       isActive
-                        ? 'bg-blue-100 text-blue-700'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                        ? 'bg-purple-600 text-white'
+                        : 'text-gray-300 hover:text-white hover:bg-gray-700'
                     }`}
                   >
                     <Icon className="w-5 h-5" />

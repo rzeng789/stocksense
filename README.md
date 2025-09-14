@@ -11,18 +11,18 @@ Core Problem We're Solving
 ## Features
 
 ### 🧠 Financial Intelligence Engine
-- **📄 1. Real-time Article Analysis**: Paste financial article text for instant analysis
-- **📈 Stock Impact Scoring**: Quantified impact predictions with confidence levels
-- **🔗 Related Articles Discovery**: Find and analyze related news automatically
-- **⏰ Timeline Insights**: Immediate, short-term, and long-term implications
+- **1. Real-time Article Analysis**: Paste financial article text for instant analysis
+- **Stock Impact Scoring**: Quantified impact predictions with confidence levels
+- **Related Articles Discovery**: Find and analyze related news automatically
+- **Timeline Insights**: Immediate, short-term, and long-term implications
 - 🌊 **2. Ripple Effect Detection**
-- **🔍 Connected Company Mapping**: Identifies suppliers, customers, competitors affected by news
-- **💡 Hidden Opportunities**: Finds investment opportunities 2-3 degrees from primary news
-- **📊 Impact Scoring**: Rates expected impact (1-10 scale) for each connected company
+- **Connected Company Mapping**: Identifies suppliers, customers, competitors affected by news
+- **Hidden Opportunities**: Finds investment opportunities 2-3 degrees from primary news
+- **Impact Scoring**: Rates expected impact (1-10 scale) for each connected company
 - ⚖️ **3. Reality vs Sentiment Validation**
-- **📊 Market Reaction Analysis**: Compares news sentiment to actual business fundamentals
-- **🚨 Overreaction Detection**: Spots buying opportunities when market panic exceeds impact
-- **💎 Underreaction Alerts**: Identifies early entry opportunities market is missing
+- **Market Reaction Analysis**: Compares news sentiment to actual business fundamentals
+- **Overreaction Detection**: Spots buying opportunities when market panic exceeds impact
+- **Underreaction Alerts**: Identifies early entry opportunities market is missing
 
 
 ### 🎯 AI Stock Analysis Engine

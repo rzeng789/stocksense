@@ -4,7 +4,23 @@ A comprehensive web application that combines real-time stock sentiment analysis
 
 ## Features
 
-### 🧠 AI Stock Analysis Engine
+### 🧠 Financial Intelligence Engine
+- **AI-Powered News Analysis**: Automatically analyze financial news headlines and extract market insights
+- **Multi-Company Impact Assessment**: Identify ripple effects across connected companies and sectors
+- **Reality vs Sentiment Analysis**: Compare market sentiment with fundamental analysis to find opportunities
+- **Automated Research**: Generate comprehensive investment reports from single news inputs
+- **Risk-Adjusted Recommendations**: Get BUY/SELL/HOLD recommendations with confidence scores and risk levels
+- **Market Context Integration**: Technical indicators, fundamental metrics, and analyst coverage
+
+### 📊 Article Impact Dashboard
+- **Real-time Article Analysis**: Paste any financial article URL or text for instant analysis
+- **Stock Impact Scoring**: Quantified impact predictions for individual stocks with confidence levels
+- **Sector Analysis**: Identify which market sectors will be most affected
+- **Interactive Visualizations**: Charts showing sentiment distribution, impact timelines, and sector breakdowns
+- **Related Articles Discovery**: Find and analyze related news stories automatically
+- **Timeline-based Insights**: Immediate, short-term, and long-term market implications
+
+### 🎯 AI Stock Analysis Engine
 - **Advanced Correlation Analysis**: Identify related stocks and their correlation strengths
 - **AI-Generated Insights**: Machine learning-powered market insights with confidence scores
 - **Risk Assessment**: Comprehensive risk evaluation with actionable factors
@@ -17,11 +33,19 @@ A comprehensive web application that combines real-time stock sentiment analysis
 - **Multi-stock Analysis**: Compare sentiment across multiple stocks
 - **Sentiment Trends**: Track how market sentiment changes over time
 
+### 🔍 Individual Stock Analysis
+- **Comprehensive Stock Profiles**: Detailed analysis of individual companies
+- **Technical & Fundamental Metrics**: PE ratios, RSI, MACD, volume patterns, and more
+- **Analyst Coverage Integration**: Consensus ratings, price targets, and recent changes
+- **Performance Tracking**: Multi-timeframe performance analysis
+- **Investment Grade Scoring**: Automated recommendation system with entry/exit levels
+
 ### 🎨 Modern User Experience
-- **Intuitive Navigation**: Switch between AI analysis and sentiment views
+- **Intuitive Navigation**: Switch between different analysis modes seamlessly
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 - **Interactive Components**: Real-time data updates and user-friendly interfaces
 - **Mock Data Support**: Fallback to demo data when API limits are reached
+- **Dark/Light Theme Support**: Customizable interface themes
 
 ## Tech Stack
 
@@ -65,6 +89,97 @@ npm run dev
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## API Endpoints
+
+### POST /api/financial-intelligence
+
+Analyzes financial news headlines and generates comprehensive investment intelligence reports.
+
+**Request Body:**
+```json
+{
+  "input": "Tesla Stock Breaks Out Past Buy Point. It's Not About EVs."
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "newsResearch": {
+      "totalArticlesAnalyzed": 15,
+      "searchQueries": ["Tesla stock analysis", "EV market trends"],
+      "newsSources": [...]
+    },
+    "primaryCompanyAnalysis": {
+      "ticker": "TSLA",
+      "companyName": "Tesla Inc",
+      "currentPrice": 248.50,
+      "technicalPosition": {...},
+      "fundamentalValuation": {...},
+      "investmentGrade": {
+        "recommendation": "BUY",
+        "confidenceScore": 0.85,
+        "riskLevel": "Moderate"
+      }
+    },
+    "rippleEffects": [...],
+    "realityVsSentiment": {...},
+    "intelligenceReport": {
+      "executiveSummary": {...},
+      "detailedRecommendations": [...],
+      "marketIntelligenceInsights": {...}
+    }
+  },
+  "timestamp": "2024-12-01T12:00:00Z"
+}
+```
+
+### POST /api/article-analysis
+
+Analyzes financial articles for stock market impact and generates detailed insights.
+
+**Request Body:**
+```json
+{
+  "articleText": "Full article text or URL",
+  "analysisDepth": "comprehensive"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "originalArticle": {
+      "headline": "Article Title",
+      "summary": "Article summary",
+      "source": "Financial Times",
+      "publishedDate": "2024-12-01"
+    },
+    "stockImpacts": [
+      {
+        "ticker": "AAPL",
+        "companyName": "Apple Inc",
+        "impactScore": 0.75,
+        "impactLevel": "Positive",
+        "confidence": 0.85,
+        "timeframe": "Short-term",
+        "reasoning": ["Strong earnings beat", "New product launch"]
+      }
+    ],
+    "sectorImpacts": [...],
+    "overallMarketSentiment": {
+      "score": 0.65,
+      "label": "Positive",
+      "confidence": 0.80
+    },
+    "keyInsights": [...],
+    "timeline": {...}
+  }
+}
+```
 
 ### GET /api/stock-analysis
 
@@ -148,10 +263,26 @@ Fetches stock sentiment data and news.
 
 ## Usage
 
+### Financial Intelligence Engine
+1. **Enter News Headlines**: Paste any financial news headline or market event
+2. **Get AI Analysis**: Receive comprehensive investment intelligence reports
+3. **Review Recommendations**: See BUY/SELL/HOLD recommendations with confidence scores
+4. **Explore Ripple Effects**: Understand how news affects connected companies
+5. **Compare Reality vs Sentiment**: Identify market overreactions and opportunities
+
+### Article Impact Dashboard
+1. **Paste Article Content**: Enter full article text or URL for analysis
+2. **View Stock Impacts**: See quantified impact predictions for individual stocks
+3. **Analyze Sectors**: Understand which market sectors will be most affected
+4. **Interactive Charts**: Explore sentiment distribution and impact timelines
+5. **Related Articles**: Discover and analyze related news stories
+
+### Stock Analysis & Sentiment
 1. **Search Stocks**: Enter stock ticker symbols (e.g., AAPL, GOOGL, TSLA)
 2. **View Sentiment**: See overall market sentiment and individual stock sentiment scores
 3. **Read News**: Browse the latest financial news with sentiment analysis
-4. **Refresh Data**: Click the refresh button to get the latest information
+4. **Individual Analysis**: Get detailed company profiles with technical and fundamental metrics
+5. **Refresh Data**: Click the refresh button to get the latest information
 
 ## API Limits
 
@@ -165,17 +296,29 @@ stocksense/
 ├── src/
 │   ├── app/
 │   │   ├── api/
+│   │   │   ├── financial-intelligence/
+│   │   │   │   └── route.ts          # Financial intelligence API endpoint
+│   │   │   ├── article-analysis/
+│   │   │   │   └── route.ts          # Article analysis API endpoint
 │   │   │   ├── stock-analysis/
-│   │   │   │   └── route.ts          # AI analysis API endpoint
+│   │   │   │   └── route.ts          # AI stock analysis API endpoint
 │   │   │   └── stock-sentiment/
 │   │   │       └── route.ts          # Sentiment analysis API endpoint
 │   │   ├── globals.css               # Global styles
 │   │   ├── layout.tsx                # Root layout
 │   │   └── page.tsx                  # Home page with navigation
-│   └── components/
-│       ├── AIStockAnalysis.tsx       # AI analysis component
-│       ├── Navigation.tsx            # Navigation component
-│       └── StockSentiment.tsx        # Sentiment analysis component
+│   ├── components/
+│   │   ├── FinancialIntelligence.tsx # Financial intelligence engine
+│   │   ├── ArticleImpactDashboard.tsx# Article impact analysis dashboard
+│   │   ├── AIStockAnalysis.tsx       # AI stock analysis component
+│   │   ├── AIStockAnalysisEngine.tsx # Enhanced AI analysis engine
+│   │   ├── IndividualStockAnalysis.tsx# Individual stock analysis component
+│   │   ├── StockSenseAI.tsx          # AI-powered stock insights
+│   │   ├── Navigation.tsx            # Navigation component
+│   │   └── StockSentiment.tsx        # Sentiment analysis component
+│   └── lib/
+│       ├── webScraper.ts             # Web scraping utilities
+│       └── aiAnalysis.ts             # AI analysis engine
 ├── .env.local                        # Environment variables
 ├── package.json                      # Dependencies
 └── README.md                         # This file

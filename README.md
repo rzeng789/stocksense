@@ -11,20 +11,19 @@ Core Problem We're Solving
 ## Features
 
 ### 🧠 Financial Intelligence Engine
-- **AI-Powered News Analysis**: Automatically analyze financial news headlines and extract market insights
-- **Multi-Company Impact Assessment**: Identify ripple effects across connected companies and sectors
-- **Reality vs Sentiment Analysis**: Compare market sentiment with fundamental analysis to find opportunities
-- **Automated Research**: Generate comprehensive investment reports from single news inputs
-- **Risk-Adjusted Recommendations**: Get BUY/SELL/HOLD recommendations with confidence scores and risk levels
-- **Market Context Integration**: Technical indicators, fundamental metrics, and analyst coverage
+- **📄 Real-time Article Analysis**: Paste financial article text for instant analysis
+- **📈 Stock Impact Scoring**: Quantified impact predictions with confidence levels
+- **🔗 Related Articles Discovery**: Find and analyze related news automatically
+- **⏰ Timeline Insights**: Immediate, short-term, and long-term implications
+- 🌊 **Ripple Effect Detection**
+- **🔍 Connected Company Mapping**: Identifies suppliers, customers, competitors affected by news
+- **💡 Hidden Opportunities**: Finds investment opportunities 2-3 degrees from primary news
+- **📊 Impact Scoring**: Rates expected impact (1-10 scale) for each connected company
+- ⚖️ **Reality vs Sentiment Validation**
+- **📊 Market Reaction Analysis**: Compares news sentiment to actual business fundamentals
+- **🚨 Overreaction Detection**: Spots buying opportunities when market panic exceeds impact
+- **💎 Underreaction Alerts**: Identifies early entry opportunities market is missing
 
-### 📊 Article Impact Dashboard
-- **Real-time Article Analysis**: Paste any financial article URL or text for instant analysis
-- **Stock Impact Scoring**: Quantified impact predictions for individual stocks with confidence levels
-- **Sector Analysis**: Identify which market sectors will be most affected
-- **Interactive Visualizations**: Charts showing sentiment distribution, impact timelines, and sector breakdowns
-- **Related Articles Discovery**: Find and analyze related news stories automatically
-- **Timeline-based Insights**: Immediate, short-term, and long-term market implications
 
 ### 🎯 AI Stock Analysis Engine
 - **Advanced Correlation Analysis**: Identify related stocks and their correlation strengths
